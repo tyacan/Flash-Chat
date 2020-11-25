@@ -58,6 +58,34 @@ class Authentication {
       if (user != null) {
         currentUser = user;
         print('Logged in user: ' + currentUser.toString());
+        /*
+        I/flutter (29805): Logged in user: User(
+          displayName: null,
+          email: muathye@gmail.com,
+          emailVerified: false,
+          isAnonymous: false,
+          metadata: UserMetadata(
+            creationTime: 2020-11-25 20:39:24.653,
+            lastSignInTime: 2020-11-25 20:39:24.653
+          ),
+          phoneNumber: null,
+          photoURL: null,
+          providerData,
+          [
+            UserInfo(
+              displayName: null,
+              email: muathye@gmail.com,
+              phoneNumber: null,
+              photoURL: null,
+              providerId: password,
+              uid: muathye@gmail.com
+            )
+          ],
+          refreshToken: ,
+          tenantId: null,
+          uid: q0AppRlOPGOLlPIgC8etqlkurb52
+          )
+        */
       }
     } catch (e) {
       print("==========user error==========");
