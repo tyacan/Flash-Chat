@@ -7,6 +7,15 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  Authentication _auth = Authentication();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _auth.getCurrentUser();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
