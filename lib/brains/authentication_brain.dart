@@ -6,7 +6,7 @@ class Authentication {
   final BuildContext context;
   final String routeToNamedNavigator;
 
-  FirebaseAuth  _auth = FirebaseAuth.instance;
+  FirebaseAuth _auth = FirebaseAuth.instance;
   User currentUser;
 
   Authentication({
@@ -35,6 +35,7 @@ class Authentication {
     context,
     routeToNamedNavigator,
   ) async {
+    print('==========try register==========');
     try {
       // return type for newUser is UserCredential;
       final newUser = await _auth.createUserWithEmailAndPassword(
@@ -43,6 +44,7 @@ class Authentication {
       );
       if (newUser != null) {
         Navigator.pushNamed(context, routeToNamedNavigator);
+        print('==========register done==========');
         return newUser;
       }
     } catch (e) {
@@ -57,11 +59,9 @@ class Authentication {
         currentUser = user;
         print('Logged in user: ' + currentUser.toString());
       }
-    } catch(e){
-      print("======================================register error=========================");
+    } catch (e) {
+      print("==========user error==========");
       print(e);
     }
   }
-
-  
 }

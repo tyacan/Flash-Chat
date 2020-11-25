@@ -1,6 +1,11 @@
 import './services/loader.dart';
 
-void main() => runApp(FlashChat());
+// void main() => runApp(FlashChat());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(FlashChat());
+}
 
 class FlashChat extends StatelessWidget {
   @override
