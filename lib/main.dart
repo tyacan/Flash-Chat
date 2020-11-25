@@ -1,4 +1,7 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 void main() {
   runApp(MyApp());
@@ -50,10 +53,71 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  FirebaseMessaging firebaseMessaging = new FirebaseMessaging();
+  // Set default `_initialized` and `_error` state to false
+  bool _initialized = false;
+  bool _error = false;
+
+  // Define an async function to initialize FlutterFire
+  void initializeFlutterFire() async {
+    try {
+      // Wait for Firebase to initialize and set `_initialized` state to true
+      await Firebase.initializeApp();
+      setState(() {
+        _initialized = true;
+      });
+    } catch (e) {
+      // Set `_error` state to true if Firebase initialization fails
+      setState(() {
+        _error = true;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    initializeFlutterFire();
+    super.initState();
+    firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) {
+        print('onMessage called: $message');
+      },
+      onResume: (Map<String, dynamic> message) {
+        print('onResume called: $message');
+      },
+      onLaunch: (Map<String, dynamic> message) {
+        print('onLaunch called: $message');
+      },
+    );
+    firebaseMessaging.getToken().then((token) {
+      print('FCM Token: $token');
+    });
+  }
+
   int _counter = 0;
+
+  void reg() async {
+    try {
+      UserCredential userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: "muathye.flashchat@gmail.com",
+        password: "SuperSecretPassword!",
+      );
+      print(userCredential.toString());
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
 
   void _incrementCounter() {
     setState(() {
+      reg();
       // This call to setState tells the Flutter framework that something has
       // changed in this State, which causes it to rerun the build method below
       // so that the display can reflect the updated values. If we changed
@@ -65,6 +129,17 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // Show error message if initialization failed
+    if (_error) {
+      print('erorr init');
+      // return SomethingWentWrong();
+    }
+
+    // Show a loader until FlutterFire is initialized
+    if (!_initialized) {
+      print('init load');
+      // return Loading();
+    }
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
