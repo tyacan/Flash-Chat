@@ -1,0 +1,83 @@
+{
+  "project_info": {
+    "project_number": "286124755728",
+    "firebase_url": "https://flash-chat-fa7f8.firebaseio.com",
+    "project_id": "flash-chat-fa7f8",
+    "storage_bucket": "flash-chat-fa7f8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:286124755728:android:b82c52a9c8f7745731b395",
+        "android_client_info": {
+          "package_name": "co.muathye.flash_chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "286124755728-co9vtpucqd6r6qpkc832dd3m9t06lhid.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAm4hE33paIaJdFt2HH1cX4gtADNJnsqks"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "286124755728-co9vtpucqd6r6qpkc832dd3m9t06lhid.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "286124755728-61o0cglkmvfurcntt83b4v42scekk3u5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "co.muathye.flashChat"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:286124755728:android:5158e8950f2e38a731b395",
+        "android_client_info": {
+          "package_name": "co.muathye.flashchat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "286124755728-co9vtpucqd6r6qpkc832dd3m9t06lhid.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAm4hE33paIaJdFt2HH1cX4gtADNJnsqks"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "286124755728-co9vtpucqd6r6qpkc832dd3m9t06lhid.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "286124755728-61o0cglkmvfurcntt83b4v42scekk3u5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "co.muathye.flashChat"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
