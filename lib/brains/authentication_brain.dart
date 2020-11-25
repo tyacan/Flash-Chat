@@ -94,6 +94,23 @@ class Authentication {
     }
   }
 
+  /// Signs out the current user.
+  ///
+  /// If successful, it also updates
+  /// any [authStateChanges], [idTokenChanges] or [userChanges] stream
+  /// listeners.
+  void logout(context) {
+    print('==========try logout==========');
+    try {
+      // return type for newUser is UserCredential;
+      _auth.signOut();
+      Navigator.pop(context);
+      print('==========logout done==========');
+    } catch (e) {
+      print(e);
+    }
+  }
+
   dynamic getCurrentUser({userData}) {
     try {
       final user = _auth.currentUser;
@@ -148,9 +165,10 @@ class Authentication {
             }
             break;
 
-          default: {
-            return currentUser;
-          }
+          default:
+            {
+              return currentUser;
+            }
         }
         print('Logged in user: ' + currentUser.toString());
         /*
