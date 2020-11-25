@@ -7,6 +7,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  String email;
+  String password;
+  Authentication _auth = Authentication();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,6 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     hintText: 'Enter your email',
                     onChanged: (value) {
                       //Do something with the user input.
+                      email = value;
                     },
                     isLight: true,
                   ),
@@ -46,6 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     hintText: 'Enter your password.',
                     onChanged: (value) {
                       //Do something with the user input.
+                      password = value;
                     },
                     isLight: true,
                   ),
@@ -55,8 +60,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   MsRoundedMaterialButton(
                     text: 'Log In',
                     color: cSecondaryColor,
-                    onPressed: () {
-                      //TODO: Implement login functionality.
+                    onPressed: () async {
+                      print(email + ' | ' + password);
+                      await _auth.login(
+                        email,
+                        password,
+                        context,
+                        ChatScreen.id,
+                      );
                     },
                   ),
                 ],
