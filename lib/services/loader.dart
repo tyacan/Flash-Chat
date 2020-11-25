@@ -8,8 +8,7 @@ export 'package:animated_text_kit/animated_text_kit.dart';
 export 'package:firebase_core/firebase_core.dart';
 export 'package:firebase_auth/firebase_auth.dart';
 export 'package:firebase_messaging/firebase_messaging.dart';
-// export 'package:flutter_local_notifications/flutter_local_notifications.dart';
-
+export 'package:modal_progress_hud/modal_progress_hud.dart';
 
 // services
 export '../services/constants.dart';
