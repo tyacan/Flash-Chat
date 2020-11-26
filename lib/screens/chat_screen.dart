@@ -7,7 +7,9 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  String textMessage;
   Authentication _auth = Authentication();
+  Store _store = Store();
 
   @override
   void initState() {
@@ -29,7 +31,7 @@ class _ChatScreenState extends State<ChatScreen> {
             },
           ),
         ],
-        title: Text('⚡️Chat'),
+        title: Text('⚡️ ' + _auth.getCurrentUser(userData: 'email')),
         backgroundColor: Colors.lightBlueAccent,
       ),
       body: SafeArea(
@@ -37,6 +39,29 @@ class _ChatScreenState extends State<ChatScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
+            StreamBuilder<QuerySnapshot>(
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return Text('no data');
+                }
+                final messages = snapshot.data.docs;
+                List<Text> messagesWidgets = [];
+                for (var message in messages) {
+                  final messageText = message['text'];
+                  final messageSender = message['sender'];
+
+                  final messageWidget =
+                      Text('$messageText from $messageSender');
+                  messagesWidgets.add(messageWidget);
+                }
+                return Expanded(
+                  child: Column(
+                    children: messagesWidgets,
+                  ),
+                );
+              },
+              stream: _store.getStreamCollection(),
+            ),
             Container(
               decoration: kMessageContainerDecoration,
               child: Row(
@@ -46,6 +71,9 @@ class _ChatScreenState extends State<ChatScreen> {
                     child: TextField(
                       onChanged: (value) {
                         //Do something with the user input.
+                        setState(() {
+                          textMessage = value;
+                        });
                       },
                       decoration: kMessageTextFieldDecoration,
                     ),
@@ -53,6 +81,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   FlatButton(
                     onPressed: () {
                       //Implement send functionality.
+                      _store.add(textMessage);
                     },
                     child: Text(
                       'Send',
