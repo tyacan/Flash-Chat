@@ -20,6 +20,15 @@ class Store {
     _store.collection('messages').add({
       'text': message,
       'sender': Authentication().getCurrentUser(userData: 'email'),
+      'user_added_at': Timestamp.now(),
+      // TODO: Use Network Time Protocol (NTP)
+      // This doesn't solve all the problems 
+      // (The timestamp is generated at call-time,
+      // not when it reaches the server),
+      // but when we only need consistent timestamps in relation to our clients,
+      // this solution works.
+      'ntp_local_added_at': '', // used to show time for the current user
+      'ntp_gmt_added_at': '', // used to order messages
     });
   }
 

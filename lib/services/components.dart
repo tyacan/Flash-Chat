@@ -120,7 +120,7 @@ class MsStreamBuilder extends StatelessWidget {
             ),
           );
         }
-        final messages = snapshot.data.docs;
+        final messages = snapshot.data.docs.reversed;
         List<MsMessageBulbble> messageBubbles = [];
         for (var message in messages) {
           final messageText = message['text'];
@@ -135,6 +135,8 @@ class MsStreamBuilder extends StatelessWidget {
         }
         return Expanded(
           child: ListView(
+            // make the list sticky to the botom
+            reverse: true,
             padding: EdgeInsets.symmetric(
               horizontal: 7.0,
               vertical: 14.0,
