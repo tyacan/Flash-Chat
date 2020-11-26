@@ -66,22 +66,28 @@ class MsRoundedTextFeild extends StatelessWidget {
 class MsMessageBulbble extends StatelessWidget {
   final String sender;
   final String text;
-  MsMessageBulbble({this.sender, this.text});
+  final bool isLoggedIn;
+  MsMessageBulbble({this.sender, this.text, this.isLoggedIn = false});
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(8.0),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: isLoggedIn ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
+          isLoggedIn ? SizedBox() :Text(
             sender,
             style: TextStyle(color: cStartColorTween, fontSize: 11.0),
           ),
           Material(
-            borderRadius: BorderRadius.circular(9),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(isLoggedIn ? 12: 0),
+              bottomLeft: Radius.circular(12),
+              bottomRight: Radius.circular(12),
+              topRight: Radius.circular(isLoggedIn ? 0: 12),
+            ),
             elevation: 4.0,
-            color: cEndColorTween,
+            color: isLoggedIn ? cStartColorTween : cEndColorTween ,
             child: Padding(
               padding: EdgeInsets.symmetric(
                 vertical: 5,
@@ -89,7 +95,7 @@ class MsMessageBulbble extends StatelessWidget {
               ),
               child: Text(
                 text,
-                style: TextStyle(color: cStartColorTween),
+                style: TextStyle(color: isLoggedIn ? cEndColorTween : cStartColorTween),
               ),
             ),
           ),
@@ -123,6 +129,7 @@ class MsStreamBuilder extends StatelessWidget {
           final messageWidget = MsMessageBulbble(
             text: messageText,
             sender: messageSender,
+            isLoggedIn: messageSender == Authentication().getCurrentUser(userData: 'email'),
           );
           messageBubbles.add(messageWidget);
         }
@@ -134,7 +141,7 @@ class MsStreamBuilder extends StatelessWidget {
             ),
             children: <Widget>[
               Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: messageBubbles,
               ),
             ],
