@@ -8,6 +8,7 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   String textMessage;
+  TextEditingController textMessageController = TextEditingController();
   Authentication _auth = Authentication();
   Store _store = Store();
 
@@ -49,6 +50,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 children: <Widget>[
                   Expanded(
                     child: TextField(
+                      controller: textMessageController,
                       onChanged: (value) {
                         //Do something with the user input.
                         setState(() {
@@ -62,6 +64,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     onPressed: () {
                       //Implement send functionality.
                       _store.add(textMessage);
+                      textMessageController.clear();
                     },
                     child: Text(
                       'Send',
