@@ -39,28 +39,8 @@ class _ChatScreenState extends State<ChatScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            StreamBuilder<QuerySnapshot>(
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return Text('no data');
-                }
-                final messages = snapshot.data.docs;
-                List<Text> messagesWidgets = [];
-                for (var message in messages) {
-                  final messageText = message['text'];
-                  final messageSender = message['sender'];
-
-                  final messageWidget =
-                      Text('$messageText from $messageSender');
-                  messagesWidgets.add(messageWidget);
-                }
-                return Expanded(
-                  child: Column(
-                    children: messagesWidgets,
-                  ),
-                );
-              },
-              stream: _store.getStreamCollection(),
+            MsStreamBuilder(
+              _store,
             ),
             Container(
               decoration: kMessageContainerDecoration,

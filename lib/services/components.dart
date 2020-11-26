@@ -62,3 +62,86 @@ class MsRoundedTextFeild extends StatelessWidget {
     );
   }
 }
+
+class MsMessageBulbble extends StatelessWidget {
+  final String sender;
+  final String text;
+  MsMessageBulbble({this.sender, this.text});
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: <Widget>[
+          Text(
+            sender,
+            style: TextStyle(color: cStartColorTween, fontSize: 11.0),
+          ),
+          Material(
+            borderRadius: BorderRadius.circular(9),
+            elevation: 4.0,
+            color: cEndColorTween,
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: 5,
+                horizontal: 8,
+              ),
+              child: Text(
+                text,
+                style: TextStyle(color: cStartColorTween),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class MsStreamBuilder extends StatelessWidget {
+  final Store _store;
+
+  MsStreamBuilder(this._store);
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<QuerySnapshot>(
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return Center(
+            child: CircularProgressIndicator(
+              backgroundColor: cSecondaryColor,
+            ),
+          );
+        }
+        final messages = snapshot.data.docs;
+        List<MsMessageBulbble> messageBubbles = [];
+        for (var message in messages) {
+          final messageText = message['text'];
+          final messageSender = message['sender'];
+
+          final messageWidget = MsMessageBulbble(
+            text: messageText,
+            sender: messageSender,
+          );
+          messageBubbles.add(messageWidget);
+        }
+        return Expanded(
+          child: ListView(
+            padding: EdgeInsets.symmetric(
+              horizontal: 7.0,
+              vertical: 14.0,
+            ),
+            children: <Widget>[
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: messageBubbles,
+              ),
+            ],
+          ),
+        );
+      },
+      stream: _store.getStreamCollection(),
+    );
+  }
+}
